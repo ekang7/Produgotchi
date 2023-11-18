@@ -1,3 +1,16 @@
+#myDraggableImageWrapper {
+    width: 100px;
+    height: 100px;
+    background-color: #ffcc00;
+    padding: 10px;
+    cursor: move;
+    position: fixed; /* Make sure it doesn't disrupt the page layout */
+    top: 10px;
+    left: 10px;
+    z-index: 9999; /* Ensure it's above other elements */
+    box-sizing: 'border-box';
+}
+
 .rustyZone-element{
     border: 1px solid red;
     background-color: rgba(255, 0, 0, 0.2);
@@ -8,3 +21,12 @@
     width: 100px;
     height: 100px;
 }
+
+/* #myDraggableImageWrapper img {
+    -webkit-user-drag: none;
+    user-drag: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+} */

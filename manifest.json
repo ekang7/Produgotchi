@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Inject MV3",
   "version": "1.0",
-  "description": "Inject draggable element",
+  "description": "Inject draggable element v3",
 
   "icons": {
     "16": "images/icon-16.png",
@@ -10,9 +10,23 @@
     "48": "images/icon-48.png",
     "128": "images/icon-128.png"
   },
-  "background": {
-    "service_worker": "scripts/background.js"
-  },
+  "content_scripts": [
+    {
+        "matches": ["*://*/*"],
+        "js": ["content.js", "scripts/contentScript.js"],
+        "css": ["css/contentScript.css"]
+    }
+  ],
+  "background": [
+    {
+        "service_worker": "scripts/background.js"
+    }],
+  "web_accessible_resources": [
+    {
+        "resources": ["dog.png"],
+        "matches": ["<all_urls>"]
+    }
+  ],
   "permissions": ["scripting"],
   "host_permissions":  ["<all_urls>"]
 }

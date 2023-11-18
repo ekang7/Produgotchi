@@ -105,7 +105,5 @@ if (typeof init === "undefined") {
       // Append the injectElement to the document body
       document.body.appendChild(injectElement);
   }
-
-  // Call the initialize function to inject the content
   init();
 }
