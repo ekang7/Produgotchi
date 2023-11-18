@@ -5,7 +5,7 @@ draggableElement.innerText = 'Drag me!';
 
 // Create the image element
 const imgElement = document.createElement('img');
-imgElement.src = chrome.runtime.getURL('dog.png'); // Adjust the file name if necessary
+imgElement.src = chrome.runtime.getURL('images/SVG/happy.svg'); // Adjust the file name if necessary
 imgElement.style.width = '100%'; // Make the image fit the wrapper div
 imgElement.style.height = '100%'; // Make the image fit the wrapper div
 draggableElement.appendChild(imgElement);
