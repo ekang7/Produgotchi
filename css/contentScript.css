@@ -10,16 +10,8 @@
     z-index: 9999; /* Ensure it's above other elements */
     box-sizing: 'border-box';
 }
-
-.rustyZone-element{
-    border: 1px solid red;
-    background-color: rgba(255, 0, 0, 0.2);
-    position: absolute;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100px;
-    height: 100px;
+#myDraggableImageWrapper img{
+  z-index: 9998;
 }
 
 .sprite-image {
