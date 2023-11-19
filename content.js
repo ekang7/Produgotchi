@@ -248,38 +248,38 @@ function setTranslate(xPos, yPos, el) {
     el.style.transform = "translate3d(" + xPos + "px, " + yPos + "px, 0)";
 }
 
-// Timer functionality
-let time = 50;
-let productive = true;
+// // Timer functionality
+// let time = 100;
+// let productive = false;
 
+// function timerLoop() {
 
-function timerLoop() {
+//     chrome.storage.local.get(['time', 'productive'], (result) => {
+//         console.log("Read Time: " + result.time);
+//         time = result.time;
+//         productive = result.productive;
+//     })
 
-    chrome.storage.sync.get(['time', 'productive'], (result) => {
-        time = result.time;
-        productive = result.productive;
-    })
+//     if (productive) {
+//         time ++;
+//     } else {
+//         time --;
+//     }
 
-    if (productive) {
-        time ++;
-    } else {
-        time --;
-    }
+//     if (time > 100) {
+//         time = 100;
+//     } else if (time < 0) {
+//         time = 0;
+//     }
 
-    if (time > 100) {
-        time = 100;
-    } else if (time < 0) {
-        time = 0;
-    }
+//     console.log("Write Time: " + time);
+//     console.log('');
+//     chrome.storage.local.set({'time': time});
+//     chrome.storage.local.set({'productive': productive});
+// }
 
-    chrome.storage.sync.set({'time': time});
-    chrome.storage.sync.set({'productive': productive});
-
-    console.log('Time: ' + time);
-}
-
-setInterval(timerLoop, 1000);
-setInterval(() => console.log(window.location.toString()), 1000);
+// setInterval(timerLoop, 1000);
+// setInterval(() => console.log(window.location.toString()), 1000);
 
 document.addEventListener('touchstart', dragStart, false);
 document.addEventListener('touchend', dragEnd, false);
@@ -288,4 +288,35 @@ document.addEventListener('touchmove', drag, false);
 document.addEventListener('mousedown', dragStart, false);
 document.addEventListener('mouseup', dragEnd, false);
 document.addEventListener('mousemove', drag, false);
+
+let url = window.location.toString().substring(0, 4096);
+let webcontent = window.document.body.innerText.toString().substring(0, 4096);
+
+console.log(url);
+console.log(webcontent);
+
+/*
+
+You are a productivity analyzer, 
+and my goal is {goal}. Given the 
+url of the webpage I am on and 
+the contents of the webpage, 
+provide a simple, single response, 
+yes or no answer in all lower case 
+alphanumeric characters if I am 
+being productive on my goal.
+
+URL: {url}
+Content: {content}
+
+if url is productive sentiment, happy dog
+if url is nonproductive sentiment, sad dog
+
+input prompt
+
+*/
+
+
+
+
 
