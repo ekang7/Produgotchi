@@ -136,20 +136,22 @@ chatContainer.addEventListener('click', () => {
 });
 
 // Function to add a message to chat history and save it
-function addMessageToChatHistory(message, type) {
+async function addMessageToChatHistory(message, type) {
+    console.log("append " +type);
     const chatMessage = document.createElement('div');
     chatMessage.textContent = message;
     chatMessage.classList.add(type); // 'user-message' or 'dog-response'
     chatHistory.appendChild(chatMessage);
 
     // Save the message to storage
-    chrome.storage.sync.get({ chatHistory: [] }, function (data) {
-        const updatedHistory = data.chatHistory;
+    const updatedHistory = await getStorage('chatHistory');
+    // chrome.storage.sync.get({ chatHistory: [] }, function (data) {
+    //     const updatedHistory = data.chatHistory;
         // updatedHistory.push({ message, type });
-        const author = type === 'user-message' ? 'user' : 'bot';
-        updatedHistory.push({ "author": author, "content": message });
-        chrome.storage.sync.set({ chatHistory: updatedHistory });
-    });
+    const author = type === 'user-message' ? 'user' : 'bot';
+    updatedHistory.push({ "author": author, "content": message });
+    chrome.storage.sync.set({ chatHistory: updatedHistory });
+    // });
 }
 
 
@@ -157,10 +159,10 @@ function addMessageToChatHistory(message, type) {
 chatInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter' && chatInput.value.trim() !== '') {
         // Add user message to chat history
-        addMessageToChatHistory(chatInput.value, 'user-message');
-        chatInput.value = '';
-        talkToDog();
-
+        addMessageToChatHistory(chatInput.value, 'user-message').then(() => {
+            chatInput.value = '';
+            talkToDog();
+        })
         // Simulate dog's response
         // setTimeout(() => {
         //     addMessageToChatHistory('Woof', 'dog-response');
@@ -392,10 +394,6 @@ const endpoint = `https://${API_ENDPOINT}/v1/projects/${PROJECT_ID}/locations/${
                     }
                 ],
                 "messages": [
-                    {
-                        "author": "user",
-                        "content": "hi i want to write a paper"
-                    },
                 ]
             }
         ],
@@ -413,12 +411,14 @@ const endpoint = `https://${API_ENDPOINT}/v1/projects/${PROJECT_ID}/locations/${
     //     // reqData.instances[0].messages.append(updatedHistory);
     //     // reqData.instances[0]["messages"] = updatedHistory;
     for (let i = 0; i < updatedHistory.length; i++) {
+        // reqData.instances[0].messages.push(updatedHistory[i]);
+        await new Promise(resolve => setTimeout(resolve, 500));
         reqData.instances[0].messages.push(updatedHistory[i]);
     }
     console.log("history", updatedHistory);
     // });
 
-    reqData.instances[0].messages = updatedHistory;
+    // reqData.instances[0].messages = updatedHistory;
     console.log("reqData", reqData.instances[0].messages);
 
     fetch(endpoint, {
