@@ -306,7 +306,15 @@ chrome.storage.sync.set({'productive': productive});
 
 console.log('Time: ' + time);
 
-// setInterval(() => console.log(window.location.toString()), 1000);
+setInterval(() => sendSite(), 30000);
+
+function sendSite(){
+    addMessageToChatHistory("I want to visit "+ window.location.toString(), 'user-message').then(() => {
+        chatInput.value = '';
+        talkToDog();
+    })
+}
+
 
 document.addEventListener('touchstart', dragStart, false);
 document.addEventListener('touchend', dragEnd, false);
