@@ -22,6 +22,27 @@ function updateDogImage(clickCount) {
     dogSprite.src = chrome.runtime.getURL(imageSrc);
 }
 
+// Initialize the dog sprite with the correct image on load
+chrome.storage.sync.get(['dogClickCount'], (result) => {
+    updateDogImage(result.dogClickCount || 0);
+});
+
+// Create a button
+const dogButton = document.createElement('button');
+dogButton.innerText = 'Pet';
+dogButton.className = 'button';
+
+dogButton.addEventListener('click', () => {
+    chrome.storage.sync.get(['dogClickCount'], (result) => {
+        let count = result.dogClickCount || 0;
+        count++;
+        console.log('Dog clicked! Count: ' + count);
+        chrome.storage.sync.set({'dogClickCount': count}, () => {
+            updateDogImage(count);
+        });
+    });
+});
+
 // Create a button
 const button = document.createElement('button');
 button.innerText = 'Ask';
@@ -88,12 +109,7 @@ blueBox.appendChild(redSquare);
 draggableElement.appendChild(dogSprite);
 draggableElement.appendChild(button);
 draggableElement.appendChild(blueBox);
-// Create the image element
-const imgElement = document.createElement('img');
-imgElement.src = chrome.runtime.getURL('dog.png'); // Adjust the file name if necessary
-imgElement.style.width = '100%'; // Make the image fit the wrapper div
-imgElement.style.height = '100%'; // Make the image fit the wrapper div
-draggableElement.appendChild(imgElement);
+draggableElement.appendChild(dogButton);
 
 document.body.appendChild(draggableElement);
 
