@@ -48,6 +48,7 @@ const button = document.createElement('button');
 button.innerText = 'Ask';
 button.className = 'button';
 
+/*
 // Create a blue box container
 const blueBox = document.createElement('div');
 blueBox.className = 'blue-box';
@@ -64,20 +65,6 @@ outputArea.className = 'output-area';
 const textBox = document.createElement('input');
 textBox.type = 'text';
 textBox.className = 'text-box';
-
-// Event listener for the button
-button.addEventListener('click', function () {
-    if (textBox.style.display == 'block') {
-      textBox.style.display = 'none';
-    } else {
-      outputArea.innerText = '';
-      blueBox.style.display = 'block';
-      outputArea.style.display = 'block';
-      textBox.style.display = 'block';
-      textBox.value = '';
-      textBox.focus();
-    }
-});
 
 // Event listener for the text box
 textBox.addEventListener('keypress', function (e) {
@@ -104,12 +91,107 @@ redSquare.addEventListener('click', function () {
 blueBox.appendChild(outputArea);
 blueBox.appendChild(textBox);
 blueBox.appendChild(redSquare);
+draggableElement.appendChild(blueBox);
+*/
+
+// Create chat window container
+const chatContainer = document.createElement('div');
+chatContainer.id = 'dogChatContainer';
+
+// Create chat history area
+const chatHistory = document.createElement('div');
+chatHistory.id = 'dogChatHistory';
+chatContainer.appendChild(chatHistory);
+
+// Create a red square
+const redSquare = document.createElement('div');
+redSquare.className = 'red-square';
+chatContainer.appendChild(redSquare);
+
+// Create input area
+const chatInput = document.createElement('input');
+chatInput.type = 'text';
+chatInput.placeholder = 'Type a message...';
+chatContainer.appendChild(chatInput);
+
+// Focus on the input field whenever the chat window is clicked
+chatContainer.addEventListener('click', () => {
+    chatInput.focus();
+});
+
+// Function to add a message to chat history and save it
+function addMessageToChatHistory(message, type) {
+    const chatMessage = document.createElement('div');
+    chatMessage.textContent = message;
+    chatMessage.classList.add(type); // 'user-message' or 'dog-response'
+    chatHistory.appendChild(chatMessage);
+
+    // Save the message to storage
+    chrome.storage.local.get({ chatHistory: [] }, function (data) {
+        const updatedHistory = data.chatHistory;
+        updatedHistory.push({ message, type });
+        chrome.storage.local.set({ chatHistory: updatedHistory });
+    });
+}
+
+// Modify your existing event listener for chat input
+chatInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter' && chatInput.value.trim() !== '') {
+        // Add user message to chat history
+        addMessageToChatHistory(chatInput.value, 'user-message');
+        chatInput.value = '';
+
+        // Simulate dog's response
+        setTimeout(() => {
+            addMessageToChatHistory('Woof', 'dog-response');
+        }, 500);
+    }
+});
+
+
+// chatInput.addEventListener('keypress', (e) => {
+//     if (e.key === 'Enter' && chatInput.value.trim() !== '') {
+//         const userMessage = document.createElement('div');
+//         userMessage.textContent = chatInput.value;
+//         userMessage.classList.add('user-message');
+//         chatHistory.appendChild(userMessage);
+
+//         chatInput.value = '';
+
+//         setTimeout(() => {
+//             const dogResponse = document.createElement('div');
+//             dogResponse.textContent = 'Woof';
+//             dogResponse.classList.add('dog-response');
+//             chatHistory.appendChild(dogResponse);
+
+//             chatHistory.scrollTop = chatHistory.scrollHeight;
+//         }, 500);
+//     }
+// });
+
+// Event listener for the button
+button.addEventListener('click', function () {
+    if (chatContainer.style.display == 'block') {
+      chatContainer.style.display = 'none';
+    } else {
+      chatContainer.style.display = 'block';
+      chatHistory.style.display = 'block';
+      chatInput.style.display = 'block';
+      chatInput.value = '';
+      chatInput.focus();
+    }
+});
+
+redSquare.addEventListener('click', function () {
+    console.log('Red square clicked! Processing logic...');
+    chatContainer.style.display = 'none';
+  });
 
 // Append the button and blue box to the injectElement
 draggableElement.appendChild(dogSprite);
 draggableElement.appendChild(button);
-draggableElement.appendChild(blueBox);
 draggableElement.appendChild(dogButton);
+draggableElement.appendChild(chatContainer);
 
 document.body.appendChild(draggableElement);
 
@@ -206,6 +288,4 @@ document.addEventListener('touchmove', drag, false);
 document.addEventListener('mousedown', dragStart, false);
 document.addEventListener('mouseup', dragEnd, false);
 document.addEventListener('mousemove', drag, false);
-
-
 

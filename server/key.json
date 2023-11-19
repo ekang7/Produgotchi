@@ -1,0 +1,15 @@
+{
+    "type": "service_account",
+    "project_id": "produguchi",
+    "private_key_id": "6b29ee850c28a011229363fd56f3782c3d8c9d3a",
+    "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCyJJCd2lBbW9Qn\nNO2ZKkXc5wNwSikPL0gk4jyTgwY4Yky9hwaFEFTou/E+ACdYx5ZNEhosaXuT7yh3\n6Kv7F5/MwhLMQQutasIL5GHLn3mon9pGml61eUcwoRUTEgAvolKmdc8ZrH3Tb1mb\nnuUy4Z7gL/9UONwPgbRpHutjL7+bSfc8AK792+mKLlqQLuQnbNanjVrI+NWeacS9\nAUnPiMUpdnyzUpQR59FTZswEX4a6pCvDliUr7n05pWEUjK6F+/J+PTbVqX9Vnsmx\n2JdR+dS0RMNmMQ3LvzrkJh0Ml0Av7/Bka1C/1j/iQ8inBWsCOgUHs6vSIi8nt01b\nECbZ+CQ3AgMBAAECggEABk4V486ZZQ0NNamWy61xIAOHz6BJNmjRHGtOWKwAST98\nFvPXJeaC90Y6SyqXHXovYP2beVJ9GTihu9IQzuDySS8zfcnfkwtFmSjR7w8Lr7gu\nADt+ejJCAlVGh3QKUE/0PAgFoVqMqYeLYwnEOvMEAy+97bvayoG2DPJsil24fmGY\nHIzsFAlncinWWnt9l1hTcLmIDCyABDULED94P+ElVqOdbVLW9uLmfMxntWJOl02G\nrSYvvNDJ9UYEkYnSfzXdq8SujJcrO7Pzjfpt1HPeCfJu7C3FINf9oUMZo75jCw+f\nsV+aMrPTrkmOLNvWETDkYE15meI38LaLqWn4OqOXYQKBgQDzvO9kugX3YYGKMdKx\nq58kKRyDyz8T8SeBLBCEFcWrw5ao1HGdcz7xkDf92p7M5avIP4WLqO2g2HBBpkly\n1WkGSdj8A0nDtHpKBcc2cAH9HVcp7zo3UsMRxBut+fHmUvstFIsrEMyFieLxRgZi\nXMvjSlTT2pt9g1nZLkIMBOxc2wKBgQC7GtbZcE8cfTJGcw12G2bfQpa4cKRZXTyn\nibIUIf1im0jKZe/w/AtQ6JWPuB+LmEfUewrP0uY2zKIPJUFdhPnh9/6iLhtf4WRZ\nALVH5EhOVt0eyvZNFccClFwHmoQIIW6Y62XPltQMOWNwZgXSxbkOht253viis34t\nyl/zLjFG1QKBgHZUjoB/U3AzVVmLMLfzExLSJrbRULFUzZIHm4kUrN/j19vlL7d6\nAN/z3UsP/TKKeiiAtkwEWkFRcsZcfaITe6aC6aYHzqMFlq0jOwDxxfVlbjC8pK3B\nL1ULuUhwZQEl3i2XoKzqvfBC7fumvGi6ln2lU6N6qSx5PYCT1ZrSNRIrAoGAEhvj\n5YGoNoKrhgQGroKybzNbsRg93+RVRYXfNXGgu5V58xTwpytN0RPhvdo9O16OvTL3\ndevcmjsuCDc731hKcyN0gq/huGLxOmgGI6IlmWdw2VUdh5JvA4HmclnzI3JQ6P4H\niZL4jQJU7IEDWUYHxi8pcJ7zA5RJxxbKOJgk7s0CgYEAsC+5IvsjIlPe3wPc2+wK\nGD+9SluTI8sVDYmMGtnEzMLJF+1AtlElEVbZEjMteE5zCJfM6cjF0uqnzOvapEyl\nNEfMGgLG2Jye8evZx97/coTFOT0vvuYJKn3cV517o8hlIEKfdu3rvEkb5oDTGVtw\nNwadCt5cAmRsqEM/uCqauAo=\n-----END PRIVATE KEY-----\n",
+    "client_email": "server@produguchi.iam.gserviceaccount.com",
+    "client_id": "116112759520513073720",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/server%40produguchi.iam.gserviceaccount.com",
+    "universe_domain": "googleapis.com"
+  }
+  
+  
