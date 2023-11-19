@@ -39,7 +39,7 @@
   .red-square {
     width: 30px;
     height: 30px;
-    background-color: red;
+    background-color: rgb(253, 152, 152);
     position: absolute;
     top: 0;
     right: 0;

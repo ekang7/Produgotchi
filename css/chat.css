@@ -1,10 +1,14 @@
 /* Chat window container */
 #dogChatContainer {
     position: fixed;
-    bottom: 10px;
-    right: 10px;
+    /* bottom: 10px;
+    right: 10px; */
     width: 300px;
     height: 400px;
+    padding: 10px;
+    margin-top: 40px;
+    position: relative;
+    display: none;
     z-index: 1000;
     overflow: hidden;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
