@@ -412,10 +412,10 @@ const endpoint = `https://${API_ENDPOINT}/v1/projects/${PROJECT_ID}/locations/${
     //     updatedHistory = data.chatHistory;
     //     // reqData.instances[0].messages.append(updatedHistory);
     //     // reqData.instances[0]["messages"] = updatedHistory;
-    //     // for (let i = 0; i < updatedHistory.length; i++) {
-    //     //     reqData.instances[0].messages.push(updatedHistory[i]);
-    //     // }
-        console.log("history", updatedHistory);
+    for (let i = 0; i < updatedHistory.length; i++) {
+        reqData.instances[0].messages.push(updatedHistory[i]);
+    }
+    console.log("history", updatedHistory);
     // });
 
     reqData.instances[0].messages = updatedHistory;
