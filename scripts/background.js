@@ -71,7 +71,7 @@ const accessToken = 'ya29.a0AfB_byAOjtq1CtuxWKc7Vpr_0PjBE9k2H84gOY25WWSXDmlUvS7D
 
 const url = `https://${API_ENDPOINT}/v1/projects/${PROJECT_ID}/locations/${LOCATION_ID}/publishers/google/models/${MODEL_ID}:predict`;
 
-const data = {
+let data = {
     "instances": [
         {
             "context": "You are a helpful, playful dog assistant. You help others with productivity by giving helpful tips, and helping them stay accountable.",
@@ -130,18 +130,25 @@ const data = {
     }
 };
 
-fetch(url, {
-    method: 'POST',
-    headers: {
-        'Authorization': `Bearer ${accessToken}`,
-        'Content-Type': 'application/json',
-        'X-Goog-User-Project': PROJECT_ID
-    },
-    body: JSON.stringify(data)
-})
-.then(response => response.json())
-.then(data => console.log(data))
-.catch(error => console.error('Error:', error));
+function talkToDog(newMessage) {
+    data.instances[0].messages.push({
+        "author": "user",
+        "content": newMessage
+    });
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${accessToken}`,
+            'Content-Type': 'application/json',
+            'X-Goog-User-Project': PROJECT_ID
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error('Error:', error));
+}
+
 
 
 
