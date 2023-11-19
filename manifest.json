@@ -12,7 +12,7 @@
   },
   "content_scripts": [
     {
-        "matches": ["*://*/*"],
+        "matches": ["<all_urls>"],
         "js": ["content.js", "scripts/contentScript.js"],
         "css": ["css/contentScript.css"]
     }
@@ -27,6 +27,6 @@
         "matches": ["<all_urls>"]
     }
   ],
-  "permissions": ["scripting", "storage"],
+  "permissions": ["scripting", "storage", "activeTab", "tabs"],
   "host_permissions":  ["<all_urls>"]
 }

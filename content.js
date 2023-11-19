@@ -23,7 +23,7 @@ function updateDogImage(clickCount) {
 }
 
 // Initialize the dog sprite with the correct image on load
-chrome.storage.sync.get(['dogClickCount'], (result) => {
+chrome.storage.local.get(['dogClickCount'], (result) => {
     updateDogImage(result.dogClickCount || 0);
 });
 
@@ -33,11 +33,11 @@ dogButton.innerText = 'Pet';
 dogButton.className = 'button';
 
 dogButton.addEventListener('click', () => {
-    chrome.storage.sync.get(['dogClickCount'], (result) => {
+    chrome.storage.local.get(['dogClickCount'], (result) => {
         let count = result.dogClickCount || 0;
         count++;
         console.log('Dog clicked! Count: ' + count);
-        chrome.storage.sync.set({'dogClickCount': count}, () => {
+        chrome.storage.local.set({'dogClickCount': count}, () => {
             updateDogImage(count);
         });
     });
@@ -166,6 +166,39 @@ function setTranslate(xPos, yPos, el) {
     el.style.transform = "translate3d(" + xPos + "px, " + yPos + "px, 0)";
 }
 
+// Timer functionality
+let time = 50;
+let productive = true;
+
+
+function timerLoop() {
+
+    chrome.storage.sync.get(['time', 'productive'], (result) => {
+        time = result.time;
+        productive = result.productive;
+    })
+
+    if (productive) {
+        time ++;
+    } else {
+        time --;
+    }
+
+    if (time > 100) {
+        time = 100;
+    } else if (time < 0) {
+        time = 0;
+    }
+
+    chrome.storage.sync.set({'time': time});
+    chrome.storage.sync.set({'productive': productive});
+
+    console.log('Time: ' + time);
+}
+
+setInterval(timerLoop, 1000);
+setInterval(() => console.log(window.location.toString()), 1000);
+
 document.addEventListener('touchstart', dragStart, false);
 document.addEventListener('touchend', dragEnd, false);
 document.addEventListener('touchmove', drag, false);
@@ -173,3 +206,6 @@ document.addEventListener('touchmove', drag, false);
 document.addEventListener('mousedown', dragStart, false);
 document.addEventListener('mouseup', dragEnd, false);
 document.addEventListener('mousemove', drag, false);
+
+
+
