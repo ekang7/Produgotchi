@@ -57,24 +57,10 @@
 } 
 
 /* General text styling */
-body, p, div {
+#dogChatContainer body, p, div {
     font-family: Georgia, serif;
     color: #4b4b4b;
     line-height: 1.6;
-}
-
-/* Headings */
-h1, h2, h3, h4, h5, h6 {
-    color: #4b4b4b;
-    margin-bottom: 0.5em;
-}
-
-h1 {
-    font-size: 2em; /* Large main heading */
-}
-
-h2 {
-    font-size: 1.5em; /* Secondary heading */
 }
 
 /* Buttons */

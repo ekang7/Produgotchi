@@ -213,7 +213,7 @@ function dragStart(e) {
         initialY = e.clientY - yOffset;
     }
 
-    if (e.target === draggableElement) {
+    if (e.target === draggableElement | e.target === dogSprite) {
         active = true;
     }
 }

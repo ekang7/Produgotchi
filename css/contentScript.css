@@ -1,7 +1,7 @@
 #myDraggableImageWrapper {
     width: 100px;
     height: 100px;
-    background-color: #ffcc00;
+    /* background-color: #ffcc00; */
     padding: 10px;
     cursor: move;
     position: fixed; /* Make sure it doesn't disrupt the page layout */
