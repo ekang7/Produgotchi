@@ -16,23 +16,23 @@
 //   });
 // }
 
-try {
-    // Listen for tab update event
-    chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
-        // Check if the tab has finished loading
-        if (changeInfo.status === 'complete') {
-        // Execute the script on the updated tab
-        chrome.scripting.executeScript({
-            target: { tabId: tab.id },
-            files: ['scripts/contentScript.js', 'css/contentScript.css']
-        });
-        chrome.scripting.insertCSS({
-            files: ["css/contentScript.css"],
-            target: { tabId: tab.id },
-          });
-        // executeScriptOnTab(tabId, 'console.log("Script executed on updated tab: " + tab.url);');
-        }
-    });
-} catch (e) {
-    console.log(e);
-}
+// try {
+//     // Listen for tab update event
+//     chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
+//         // Check if the tab has finished loading
+//         if (changeInfo.status === 'complete') {
+//         // Execute the script on the updated tab
+//         chrome.scripting.executeScript({
+//             target: { tabId: tab.id },
+//             files: ['scripts/contentScript.js', 'css/contentScript.css']
+//         });
+//         chrome.scripting.insertCSS({
+//             files: ["css/contentScript.css"],
+//             target: { tabId: tab.id },
+//           });
+//         // executeScriptOnTab(tabId, 'console.log("Script executed on updated tab: " + tab.url);');
+//         }
+//     });
+// } catch (e) {
+//     console.log(e);
+// }

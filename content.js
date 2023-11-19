@@ -88,6 +88,12 @@ blueBox.appendChild(redSquare);
 draggableElement.appendChild(dogSprite);
 draggableElement.appendChild(button);
 draggableElement.appendChild(blueBox);
+// Create the image element
+const imgElement = document.createElement('img');
+imgElement.src = chrome.runtime.getURL('dog.png'); // Adjust the file name if necessary
+imgElement.style.width = '100%'; // Make the image fit the wrapper div
+imgElement.style.height = '100%'; // Make the image fit the wrapper div
+draggableElement.appendChild(imgElement);
 
 document.body.appendChild(draggableElement);
 

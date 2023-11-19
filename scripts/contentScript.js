@@ -107,3 +107,29 @@ if (typeof init === "undefined") {
   }
   init();
 }
+
+       // Wait for the DOM to be fully loaded
+       document.addEventListener('DOMContentLoaded', function() {
+        // Create the draggable element
+        const draggableElement = document.createElement('div');
+        draggableElement.id = 'myDraggable';
+        draggableElement.innerText = 'Drag me!';
+        document.body.appendChild(draggableElement);
+
+        // Inject jQuery
+        const scriptJQuery = document.createElement('script');
+        scriptJQuery.src = 'https://code.jquery.com/jquery-3.6.0.min.js';
+        document.head.appendChild(scriptJQuery);
+
+        // Once jQuery is loaded, inject jQuery UI
+        scriptJQuery.onload = () => {
+            const scriptJQueryUI = document.createElement('script');
+            scriptJQueryUI.src = 'https://code.jquery.com/ui/1.12.1/jquery-ui.min.js';
+            document.head.appendChild(scriptJQueryUI);
+
+            scriptJQueryUI.onload = () => {
+                // Once jQuery UI is loaded, make the element draggable
+                $('#myDraggable').draggable();
+            };
+        };
+      });
