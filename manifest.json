@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Inject MV3",
   "version": "1.0",
-  "description": "Inject draggable element v3",
+  "description": "Produgotchi :D",
 
   "icons": {
     "16": "images/icon-16.png",
@@ -13,13 +13,13 @@
   "content_scripts": [
     {
         "matches": ["*://*/*"],
-        "js": ["content.js", "scripts/contentScript.js", "chat.js"],
+        "js": ["content.js", "scripts/contentScript.js"],
         "css": ["css/contentScript.css", "css/chat.css"]
     }
   ],
   "background": [
     {
-        "service_worker": "scripts/background.js"
+        "service_worker": "background.js"
     }],
   "web_accessible_resources": [
     {
@@ -27,6 +27,6 @@
         "matches": ["<all_urls>"]
     }
   ],
-  "permissions": ["scripting", "storage", "activeTab", "tabs"],
+  "permissions": ["tabs", "scripting", "storage", "activeTab"],
   "host_permissions":  ["<all_urls>"]
 }

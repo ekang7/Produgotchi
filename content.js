@@ -41,6 +41,9 @@ dogButton.addEventListener('click', () => {
             updateDogImage(count);
         });
     });
+
+    chrome.storage.sync.set({ chatHistory: [] });
+
 });
 
 // Create a button
@@ -103,6 +106,19 @@ const chatHistory = document.createElement('div');
 chatHistory.id = 'dogChatHistory';
 chatContainer.appendChild(chatHistory);
 
+// document.addEventListener('DOMContentLoaded', function() {
+//     console.log('DOM fully loaded and parsed');
+//     chrome.storage.sync.get({ chatHistory: [] }, function (data) {
+//         for (let i = 0; i < data.chatHistory.length; i++) {
+//             console.log(data.chatHistory);
+//             const chatMessage = document.createElement('div');
+//             chatMessage.textContent = data[i].message;
+//             chatMessage.classList.add(data[i].type); // 'user-message' or 'dog-response'
+//             chatHistory.appendChild(chatMessage);
+//         }
+//     });
+// })
+
 // Create a red square
 const redSquare = document.createElement('div');
 redSquare.className = 'red-square';
@@ -127,12 +143,15 @@ function addMessageToChatHistory(message, type) {
     chatHistory.appendChild(chatMessage);
 
     // Save the message to storage
-    chrome.storage.local.get({ chatHistory: [] }, function (data) {
+    chrome.storage.sync.get({ chatHistory: [] }, function (data) {
         const updatedHistory = data.chatHistory;
-        updatedHistory.push({ message, type });
-        chrome.storage.local.set({ chatHistory: updatedHistory });
+        // updatedHistory.push({ message, type });
+        const author = type === 'user-message' ? 'user' : 'bot';
+        updatedHistory.push({ "author": author, "content": message });
+        chrome.storage.sync.set({ chatHistory: updatedHistory });
     });
 }
+
 
 // Modify your existing event listener for chat input
 chatInput.addEventListener('keypress', (e) => {
@@ -140,11 +159,12 @@ chatInput.addEventListener('keypress', (e) => {
         // Add user message to chat history
         addMessageToChatHistory(chatInput.value, 'user-message');
         chatInput.value = '';
+        talkToDog();
 
         // Simulate dog's response
-        setTimeout(() => {
-            addMessageToChatHistory('Woof', 'dog-response');
-        }, 500);
+        // setTimeout(() => {
+        //     addMessageToChatHistory('Woof', 'dog-response');
+        // }, 500);
     }
 });
 
@@ -279,6 +299,11 @@ function setTranslate(xPos, yPos, el) {
 // }
 
 // setInterval(timerLoop, 1000);
+chrome.storage.sync.set({'time': time});
+chrome.storage.sync.set({'productive': productive});
+
+console.log('Time: ' + time);
+
 // setInterval(() => console.log(window.location.toString()), 1000);
 
 document.addEventListener('touchstart', dragStart, false);
@@ -316,6 +341,110 @@ input prompt
 
 */
 
+// app stuff starts here:
+function getStorage(key) {
+    return new Promise((resolve, reject) => {
+        chrome.storage.sync.get(key, (result) => {
+            if (chrome.runtime.lastError) {
+                // Reject the promise if there's an error
+                reject(chrome.runtime.lastError);
+            } else {
+                // Resolve the promise with the result
+                resolve(result[key]);
+            }
+        });
+    });
+}
+
+async function talkToDog() {
+    const API_ENDPOINT = "us-central1-aiplatform.googleapis.com";
+const PROJECT_ID = "produguchi";
+const MODEL_ID = "chat-bison";
+const LOCATION_ID = "us-central1";
+
+const accessToken = 'ya29.a0AfB_byCpXEKvr8xRp7IZho-lg5coEKmp_MFeYbBV_rTELudUEVabDiefIPRZi5LwPUkO8wGow36okEE8RN6VvoIohEWPhKEv5oaE9wp-Rmsu5sDGGdGYXUjeXo70pGOIXARkqG_FKOlGGendhXO8KY_tuDkQ8PeyGrGchC6VrKLk7bROcqEkRYILP2vVD1RHPjhbD2_QiDCRTpd8CZJJ48uOK-KG3mZtIgNSfZUHwdX-7_7PRAlbgJmvzRhAh8_k3nAN8y6JQ26NMWIkkPR4-syZedldwcVGfr199Z-XoRSLqzVOPCkltkBi2W3U7NHOPPc5F4OqUSwBI9cnNFJJMIibvhyvUdIvsJA4316lPuLzjYUCF8dc5OCphEuzSXYbsVKfAlLQJwjg0Ovs6H-P_CSWyGmqlCwgaCgYKAZ4SARMSFQHGX2MiY5A0mwbwakEXmSEs7WfsJw0423';
+const endpoint = `https://${API_ENDPOINT}/v1/projects/${PROJECT_ID}/locations/${LOCATION_ID}/publishers/google/models/${MODEL_ID}:predict`;
+    console.log("trying to talk to dog");
+    let reqData = {
+        "instances": [
+            {
+                "context": "You are a helpful, playful dog assistant. You help others with productivity by giving helpful tips, and helping them stay accountable.",
+                "examples": [
+                    {
+                        "input": {
+                            "author": "user",
+                            "content": "I want to write a history essay"
+                        },
+                        "output": {
+                            "author": "bot",
+                            "content": "Woof that sounds great! What will the essay be about?"
+                        }
+                    },
+                    {
+                        "input": {
+                            "author": "user",
+                            "content": "I want to create a powerpoint. "
+                        },
+                        "output": {
+                            "author": "bot",
+                            "content": "That sounds great! What will the powerpoint be about? Woof"
+                        }
+                    }
+                ],
+                "messages": [
+                    {
+                        "author": "user",
+                        "content": "hi i want to write a paper"
+                    },
+                ]
+            }
+        ],
+        "parameters": {
+            "candidateCount": 1,
+            "maxOutputTokens": 184,
+            "temperature": 0.2,
+            "topP": 0.53,
+            "topK": 12
+        }
+    };
+    const updatedHistory = await getStorage('chatHistory');
+    // chrome.storage.sync.get({ chatHistory: [] }, function (data) {
+    //     updatedHistory = data.chatHistory;
+    //     // reqData.instances[0].messages.append(updatedHistory);
+    //     // reqData.instances[0]["messages"] = updatedHistory;
+    //     // for (let i = 0; i < updatedHistory.length; i++) {
+    //     //     reqData.instances[0].messages.push(updatedHistory[i]);
+    //     // }
+        console.log("history", updatedHistory);
+    // });
+
+    reqData.instances[0].messages = updatedHistory;
+    console.log("reqData", reqData.instances[0].messages);
+
+    fetch(endpoint, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${accessToken}`,
+            'Content-Type': 'application/json',
+            'X-Goog-User-Project': PROJECT_ID
+        },
+        body: JSON.stringify(reqData)
+    })
+    .then(response => {
+        // Check if the request was successful
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json(); // Parse JSON from the response
+      })
+    .then(data => {
+        console.log("pred", data.predictions[0].candidates[0]);
+        doggo = data.predictions[0].candidates[0].content
+        addMessageToChatHistory(doggo, 'dog-response');
+    })
+    .catch(error => console.error('Error:', error));
+    // alert("Response is " + reponse.json());
+}
 
 
 
