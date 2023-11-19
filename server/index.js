@@ -7,7 +7,7 @@ const port = 3000;
 
 async function getAccessToken() {
     const auth = new GoogleAuth({
-        keyFile: '/Users/edwardkang/Desktop/produgotchi-server/key.json', // Path to your service account key file
+        keyFile: './key.json', // Path to your service account key file
         scopes: ['https://www.googleapis.com/auth/cloud-platform'], // Specify the scopes required
     });
 
