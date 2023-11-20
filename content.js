@@ -23,7 +23,7 @@ function updateDogImage(clickCount) {
 }
 
 // Initialize the dog sprite with the correct image on load
-chrome.storage.local.get(['dogClickCount'], (result) => {
+chrome.storage.sync.get(['dogClickCount'], (result) => {
     updateDogImage(result.dogClickCount || 0);
 });
 
@@ -33,11 +33,11 @@ dogButton.innerText = 'Pet';
 dogButton.className = 'button';
 
 dogButton.addEventListener('click', () => {
-    chrome.storage.local.get(['dogClickCount'], (result) => {
+    chrome.storage.sync.get(['dogClickCount'], (result) => {
         let count = result.dogClickCount || 0;
         count++;
         console.log('Dog clicked! Count: ' + count);
-        chrome.storage.local.set({'dogClickCount': count}, () => {
+        chrome.storage.sync.set({'dogClickCount': count}, () => {
             updateDogImage(count);
         });
     });
@@ -301,12 +301,12 @@ function setTranslate(xPos, yPos, el) {
 // }
 
 // setInterval(timerLoop, 1000);
-chrome.storage.sync.set({'time': time});
-chrome.storage.sync.set({'productive': productive});
+// chrome.storage.sync.set({'time': time});
+// chrome.storage.sync.set({'productive': productive});
 
-console.log('Time: ' + time);
+// console.log('Time: ' + time);
 
-setInterval(() => sendSite(), 30000);
+// setInterval(() => sendSite(), 30000);
 
 function sendSite(){
     addMessageToChatHistory("I want to visit "+ window.location.toString(), 'user-message').then(() => {
@@ -372,7 +372,7 @@ const PROJECT_ID = "produguchi";
 const MODEL_ID = "chat-bison";
 const LOCATION_ID = "us-central1";
 
-const accessToken = 'ya29.a0AfB_byCpXEKvr8xRp7IZho-lg5coEKmp_MFeYbBV_rTELudUEVabDiefIPRZi5LwPUkO8wGow36okEE8RN6VvoIohEWPhKEv5oaE9wp-Rmsu5sDGGdGYXUjeXo70pGOIXARkqG_FKOlGGendhXO8KY_tuDkQ8PeyGrGchC6VrKLk7bROcqEkRYILP2vVD1RHPjhbD2_QiDCRTpd8CZJJ48uOK-KG3mZtIgNSfZUHwdX-7_7PRAlbgJmvzRhAh8_k3nAN8y6JQ26NMWIkkPR4-syZedldwcVGfr199Z-XoRSLqzVOPCkltkBi2W3U7NHOPPc5F4OqUSwBI9cnNFJJMIibvhyvUdIvsJA4316lPuLzjYUCF8dc5OCphEuzSXYbsVKfAlLQJwjg0Ovs6H-P_CSWyGmqlCwgaCgYKAZ4SARMSFQHGX2MiY5A0mwbwakEXmSEs7WfsJw0423';
+const accessToken = 'ya29.a0AfB_byAP_F2lqYOQZchYR6oN_fWnvsL9-cFf9pX6qjMpPXvlYF_MfYNZ1ewyS0XpFprf9fWekOTU1_V6d4K5yTbAfxyA0h_aCgwp0Ye4RFpsH172o8e_OgsQpbaKaHdfKltFrF6hRIRrYqCih0wEPPyLpGgSLn7xnSRU_D1vIPpNqkPl1uxXuCwVLo3bljxu75lC8Zz8AdeZZTskDTG3Cn4rg9pI_0_obY6ou3yQa9X4frPo5Dbh62HNU1yUT5Y96sQQlteMZQJQjoRbLkhDpwb43rfDfh_CqgSj4lKh9daFmVJguLVSTcYYWFoXfTipoowasWv71d0L0ZnkFhOPFLAwQ8cw8XAbyyTAbJynLtp0lH7QFLWie5Y-tNKgaX5tN9C2krJkdBxpWV33UTTn_5GwtUc8sq6YaCgYKAcMSARESFQHGX2MiEETzBjI6esoWZoibM4Wlmw0423';
 const endpoint = `https://${API_ENDPOINT}/v1/projects/${PROJECT_ID}/locations/${LOCATION_ID}/publishers/google/models/${MODEL_ID}:predict`;
     console.log("trying to talk to dog");
     let reqData = {
